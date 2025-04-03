@@ -1,5 +1,4 @@
 import java.text.DecimalFormat;
-
 import static javax.swing.JOptionPane.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.Double.parseDouble;
@@ -39,10 +38,19 @@ public class Menu {
                         pesquisarProduto();
                         break;
                     case 3:
-                        pesquisarFornecedor();
+                        pesquisar();
                         break;
                 }
             }
+        }
+    }
+
+    private void pesquisar() {
+        Fornecedor fornecedor = pesquisarFornecedor();
+        if (fornecedor != null){
+            String aux = "Fornecedor: " + fornecedor.getNome() + "/n";
+            aux += "CNPJ: " + fornecedor.getCnpj();
+            showMessageDialog(null,aux);
         }
     }
 
@@ -55,7 +63,7 @@ public class Menu {
             fornecedor = cadastrarFornecedor();
         }
 
-        nome = showInputDialog("Nome");
+        nome = showInputDialog("Nome do produto");
         valor = parseDouble(showInputDialog("Valor unitário"));
         qtdEstoque = parseInt(showInputDialog("Quantidade e estoque"));
         produto[indexProduto] = new Produto(nome, valor, qtdEstoque, fornecedor);
@@ -81,7 +89,7 @@ public class Menu {
     }
 
     private Fornecedor pesquisarFornecedor() {
-        long cnpj = parseLong(showInputDialog("CNPJ"));
+        long cnpj = parseLong(showInputDialog("CNPJ do Fornecedor"));
         for (int i = 0; i < indexFornecedor; i++) {
             if (fornecedor[i].getCnpj() == cnpj) {
                 return fornecedor[i];
@@ -96,7 +104,7 @@ public class Menu {
         long cnpj;
         Fornecedor f = null;
         if (indexFornecedor < fornecedor.length) {
-            nome = showInputDialog("Nome");
+            nome = showInputDialog("Nome do Fornecedor");
             cnpj = parseLong(showInputDialog("CNPJ"));
             f = new Fornecedor(nome, cnpj);
             fornecedor[indexFornecedor] = f;
